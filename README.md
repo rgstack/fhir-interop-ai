@@ -1,6 +1,6 @@
-# FHIR data → AI insight in your pocket.
+# FHIR data → your AI Primary Care Physician in your pocket.
 
-**An iOS app that connects to Epic via SMART on FHIR, pulls your clinical history, and asks an LLM to explain it in plain English.**
+**An iOS app that connects to Epic via SMART on FHIR, pulls your clinical history, and asks an LLM to act as a Primary Care Physician — returning a plain-English summary and a 10-point personalized care plan.**
 
 Private codebase. Public README.
 
@@ -16,10 +16,13 @@ Patients can access their own health records through FHIR APIs — mandated by t
 
 1. **Authenticates** the patient to their EHR (Epic Sandbox in development) via **SMART on FHIR** — OAuth2 + PKCE.
 2. **Pulls** their clinical data — Patient, Medications, Lab Results, Observations.
-3. **Sends** a structured summary to an LLM (OpenAI `gpt-3.5-turbo` today) and gets back a plain-English insight.
-4. **Displays** the AI summary alongside the raw data, so the patient sees both the structured truth and a human reading of it.
+3. **Prompts the LLM to act as a Primary Care Physician** (not just a summarizer). System prompt: *"You are a highly skilled Primary Care Physician. Review the following patient details, medications, observations, and lab results and provide (1) a detailed summary and (2) detailed advice to the patient in 10 bullet points for their care."*
+4. **Returns two things** to the patient:
+   - A plain-English **summary** of their clinical picture.
+   - A **10-point personalized care advice list** — what to do next, what to watch, what to ask their real PCP about.
+5. **Displays** the AI output alongside the raw FHIR data, so the patient sees both the structured truth and a practical set of next steps.
 
-No PHI leaves the device until the patient explicitly taps "summarize."
+No PHI leaves the device until the patient explicitly asks for advice.
 
 ---
 
@@ -30,7 +33,7 @@ Two trends collide here:
 - **Patient access to FHIR data is now a regulation, not a feature** — Cures Act, CMS-0057, Information Blocking rules.
 - **LLMs are finally good enough to read clinical JSON and explain it.**
 
-Most patient-portal experiences still dump FHIR into tables nobody reads. This is a working proof that the whole loop — EHR OAuth → FHIR pull → LLM summary → native iOS UI — fits in a small app a solo developer can build in a weekend.
+Most patient-portal experiences still dump FHIR into tables nobody reads. This is a working proof that the whole loop — EHR OAuth → FHIR pull → LLM acting as a PCP → 10-point care plan in the patient's hand — fits in a small app a solo developer can build in a weekend.
 
 ---
 
